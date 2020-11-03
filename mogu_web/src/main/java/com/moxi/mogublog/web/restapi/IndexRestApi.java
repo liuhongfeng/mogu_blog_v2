@@ -1,6 +1,5 @@
 package com.moxi.mogublog.web.restapi;
 
-
 import com.moxi.mogublog.utils.ResultUtil;
 import com.moxi.mogublog.utils.StringUtils;
 import com.moxi.mogublog.web.global.MessageConf;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * <p>
@@ -54,14 +52,12 @@ public class IndexRestApi {
                                  @ApiParam(name = "level", value = "推荐等级", required = false) @RequestParam(name = "level", required = false, defaultValue = "0") Integer level,
                                  @ApiParam(name = "currentPage", value = "当前页数", required = false) @RequestParam(name = "currentPage", required = false, defaultValue = "1") Long currentPage,
                                  @ApiParam(name = "useSort", value = "使用排序", required = false) @RequestParam(name = "useSort", required = false, defaultValue = "0") Integer useSort) {
-
         return ResultUtil.result(SysConf.SUCCESS, blogService.getBlogPageByLevel(level, currentPage, useSort));
     }
 
     @ApiOperation(value = "获取首页排行博客", notes = "获取首页排行博客")
     @GetMapping("/getHotBlog")
     public String getHotBlog() {
-
         log.info("获取首页排行博客");
         return ResultUtil.result(SysConf.SUCCESS, blogService.getHotBlog());
     }
@@ -71,7 +67,6 @@ public class IndexRestApi {
     public String getNewBlog(HttpServletRequest request,
                              @ApiParam(name = "currentPage", value = "当前页数", required = false) @RequestParam(name = "currentPage", required = false, defaultValue = "1") Long currentPage,
                              @ApiParam(name = "pageSize", value = "每页显示数目", required = false) @RequestParam(name = "pageSize", required = false, defaultValue = "10") Long pageSize) {
-
         log.info("获取首页最新的博客");
         return ResultUtil.result(SysConf.SUCCESS, blogService.getNewBlog(currentPage, null));
     }
@@ -81,18 +76,15 @@ public class IndexRestApi {
     public String getBlogBySearch(HttpServletRequest request,
                                   @ApiParam(name = "currentPage", value = "当前页数", required = false) @RequestParam(name = "currentPage", required = false, defaultValue = "1") Long currentPage,
                                   @ApiParam(name = "pageSize", value = "每页显示数目", required = false) @RequestParam(name = "pageSize", required = false, defaultValue = "10") Long pageSize) {
-
         log.info("获取首页最新的博客");
         return ResultUtil.result(SysConf.SUCCESS, blogService.getBlogBySearch(currentPage, null));
     }
-
 
     @ApiOperation(value = "按时间戳获取博客", notes = "按时间戳获取博客")
     @GetMapping("/getBlogByTime")
     public String getBlogByTime(HttpServletRequest request,
                                 @ApiParam(name = "currentPage", value = "当前页数", required = false) @RequestParam(name = "currentPage", required = false, defaultValue = "1") Long currentPage,
                                 @ApiParam(name = "pageSize", value = "每页显示数目", required = false) @RequestParam(name = "pageSize", required = false, defaultValue = "10") Long pageSize) {
-
         String blogNewCount = sysParamsService.getSysParamsValueByKey(SysConf.BLOG_NEW_COUNT);
         return ResultUtil.result(SysConf.SUCCESS, blogService.getBlogByTime(currentPage, Long.valueOf(blogNewCount)));
     }
@@ -130,11 +122,11 @@ public class IndexRestApi {
     @ApiOperation(value = "记录访问页面", notes = "记录访问页面")
     @GetMapping("/recorderVisitPage")
     public String recorderVisitPage(@ApiParam(name = "pageName", value = "页面名称", required = false) @RequestParam(name = "pageName", required = true) String pageName) {
-
         if (StringUtils.isEmpty(pageName)) {
             return ResultUtil.result(SysConf.SUCCESS, MessageConf.PARAM_INCORRECT);
         }
         return ResultUtil.result(SysConf.SUCCESS, MessageConf.INSERT_SUCCESS);
     }
+
 }
 

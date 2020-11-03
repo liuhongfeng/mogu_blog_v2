@@ -24,7 +24,7 @@ public interface BlogService extends SuperService<Blog> {
      *
      * @return
      */
-    public List<Blog> setTagByBlogList(List<Blog> list);
+    List<Blog> setTagByBlogList(List<Blog> list);
 
     /**
      * 给博客列表设置分类和标签
@@ -32,7 +32,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param list
      * @return
      */
-    public List<Blog> setTagAndSortByBlogList(List<Blog> list);
+    List<Blog> setTagAndSortByBlogList(List<Blog> list);
 
     /**
      * 给博客列表设置分类，标签，图片
@@ -40,7 +40,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param list
      * @return
      */
-    public List<Blog> setTagAndSortAndPictureByBlogList(List<Blog> list);
+    List<Blog> setTagAndSortAndPictureByBlogList(List<Blog> list);
 
     /**
      * 给博客设置标签
@@ -48,7 +48,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param blog
      * @return
      */
-    public Blog setTagByBlog(Blog blog);
+    Blog setTagByBlog(Blog blog);
 
     /**
      * 给博客设置分类
@@ -56,7 +56,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param blog
      * @return
      */
-    public Blog setSortByBlog(Blog blog);
+    Blog setSortByBlog(Blog blog);
 
     /**
      * 通过推荐等级获取博客列表
@@ -64,37 +64,37 @@ public interface BlogService extends SuperService<Blog> {
      * @param level
      * @return
      */
-    public List<Blog> getBlogListByLevel(Integer level);
+    List<Blog> getBlogListByLevel(Integer level);
 
     /**
-     * 通过推荐等级获取博客Page，是否排序
+     * 通过推荐等级获取博客 Page，是否排序
      *
      * @param level
      * @return
      */
-    public IPage<Blog> getBlogPageByLevel(Page<Blog> page, Integer level, Integer useSort);
+    IPage<Blog> getBlogPageByLevel(Page<Blog> page, Integer level, Integer useSort);
 
     /**
      * 通过状态获取博客数量
      */
-    public Integer getBlogCount(Integer status);
+    Integer getBlogCount(Integer status);
 
     /**
      * 通过标签获取博客数目
      */
-    public List<Map<String, Object>> getBlogCountByTag();
+    List<Map<String, Object>> getBlogCountByTag();
 
     /**
      * 通过标签获取博客数目
      */
-    public List<Map<String, Object>> getBlogCountByBlogSort();
+    List<Map<String, Object>> getBlogCountByBlogSort();
 
     /**
      * 获取一年内的文章贡献数
      *
      * @return
      */
-    public Map<String, Object> getBlogContributeCount();
+    Map<String, Object> getBlogContributeCount();
 
     /**
      * 通过uid获取博客内容
@@ -102,7 +102,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param uid
      * @return
      */
-    public Blog getBlogByUid(String uid);
+    Blog getBlogByUid(String uid);
 
     /**
      * 根据BlogUid获取相关的博客
@@ -110,7 +110,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param blogUid
      * @return
      */
-    public List<Blog> getSameBlogByBlogUid(String blogUid);
+    List<Blog> getSameBlogByBlogUid(String blogUid);
 
     /**
      * 获取点击量前top的博客列表
@@ -118,7 +118,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param top
      * @return
      */
-    public List<Blog> getBlogListByTop(Integer top);
+    List<Blog> getBlogListByTop(Integer top);
 
     /**
      * 获取博客列表
@@ -126,21 +126,21 @@ public interface BlogService extends SuperService<Blog> {
      * @param blogVO
      * @return
      */
-    public IPage<Blog> getPageList(BlogVO blogVO);
+    IPage<Blog> getPageList(BlogVO blogVO);
 
     /**
      * 新增博客
      *
      * @param blogVO
      */
-    public String addBlog(BlogVO blogVO);
+    String addBlog(BlogVO blogVO);
 
     /**
      * 编辑博客
      *
      * @param blogVO
      */
-    public String editBlog(BlogVO blogVO);
+    String editBlog(BlogVO blogVO);
 
     /**
      * 推荐博客排序调整
@@ -148,14 +148,14 @@ public interface BlogService extends SuperService<Blog> {
      * @param blogVOList
      * @return
      */
-    public String editBatch(List<BlogVO> blogVOList);
+    String editBatch(List<BlogVO> blogVOList);
 
     /**
      * 批量删除博客
      *
      * @param blogVO
      */
-    public String deleteBlog(BlogVO blogVO);
+    String deleteBlog(BlogVO blogVO);
 
     /**
      * 批量删除博客
@@ -163,7 +163,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param blogVoList
      * @return
      */
-    public String deleteBatchBlog(List<BlogVO> blogVoList);
+    String deleteBatchBlog(List<BlogVO> blogVoList);
 
     /**
      * 本地博客上传
@@ -171,41 +171,41 @@ public interface BlogService extends SuperService<Blog> {
      * @param filedatas
      * @return
      */
-    public String uploadLocalBlog(List<MultipartFile> filedatas) throws IOException;
+    String uploadLocalBlog(List<MultipartFile> filedatas) throws IOException;
 
     /**
      * 删除和博客分类有关的Redis缓存
      */
-    public void deleteRedisByBlogSort();
+    void deleteRedisByBlogSort();
 
     /**
      * 删除和博客标签有关的Redis缓存
      */
-    public void deleteRedisByBlogTag();
+    void deleteRedisByBlogTag();
 
     /**
      * 删除和博客有关的Redis缓存
      */
-    public void deleteRedisByBlog();
+    void deleteRedisByBlog();
 
-    //========================mogu-web使用==========================
+    //======================== mogu-web 使用==========================
 
     /**
-     * 通过推荐等级获取博客Page
+     * 通过推荐等级获取博客 Page
      *
      * @param level       推荐级别
      * @param currentPage 当前页
      * @param useSort     是否使用排序字段
      * @return
      */
-    public IPage<Blog> getBlogPageByLevel(Integer level, Long currentPage, Integer useSort);
+    IPage<Blog> getBlogPageByLevel(Integer level, Long currentPage, Integer useSort);
 
     /**
      * 获取首页排行博客
      *
      * @return
      */
-    public IPage<Blog> getHotBlog();
+    IPage<Blog> getHotBlog();
 
 
     /**
@@ -215,7 +215,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> getNewBlog(Long currentPage, Long pageSize);
+    IPage<Blog> getNewBlog(Long currentPage, Long pageSize);
 
     /**
      * mogu-search调用获取博客的接口[包含内容]
@@ -224,7 +224,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> getBlogBySearch(Long currentPage, Long pageSize);
+    IPage<Blog> getBlogBySearch(Long currentPage, Long pageSize);
 
     /**
      * 按时间戳获取博客
@@ -233,7 +233,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> getBlogByTime(Long currentPage, Long pageSize);
+    IPage<Blog> getBlogByTime(Long currentPage, Long pageSize);
 
     /**
      * 通过博客Uid获取点赞数
@@ -241,7 +241,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param uid
      * @return
      */
-    public Integer getBlogPraiseCountByUid(String uid);
+    Integer getBlogPraiseCountByUid(String uid);
 
     /**
      * 通过UID给博客点赞
@@ -249,7 +249,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param uid
      * @return
      */
-    public String praiseBlogByUid(String uid);
+    String praiseBlogByUid(String uid);
 
     /**
      * 根据标签Uid获取相关的博客
@@ -257,7 +257,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param tagUid
      * @return
      */
-    public IPage<Blog> getSameBlogByTagUid(String tagUid);
+    IPage<Blog> getSameBlogByTagUid(String tagUid);
 
     /**
      * 通过博客分类UID获取博客列表
@@ -267,7 +267,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> getListByBlogSortUid(String blogSortUid, Long currentPage, Long pageSize);
+    IPage<Blog> getListByBlogSortUid(String blogSortUid, Long currentPage, Long pageSize);
 
     /**
      * 通过关键字搜索博客列表
@@ -277,7 +277,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public Map<String, Object> getBlogByKeyword(String keywords, Long currentPage, Long pageSize);
+    Map<String, Object> getBlogByKeyword(String keywords, Long currentPage, Long pageSize);
 
     /**
      * 通过标签搜索博客
@@ -287,7 +287,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> searchBlogByTag(String tagUid, Long currentPage, Long pageSize);
+    IPage<Blog> searchBlogByTag(String tagUid, Long currentPage, Long pageSize);
 
     /**
      * 通过博客分类搜索博客
@@ -297,7 +297,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> searchBlogByBlogSort(String blogSortUid, Long currentPage, Long pageSize);
+    IPage<Blog> searchBlogByBlogSort(String blogSortUid, Long currentPage, Long pageSize);
 
     /**
      * 通过作者搜索博客
@@ -307,7 +307,7 @@ public interface BlogService extends SuperService<Blog> {
      * @param pageSize
      * @return
      */
-    public IPage<Blog> searchBlogByAuthor(String author, Long currentPage, Long pageSize);
+    IPage<Blog> searchBlogByAuthor(String author, Long currentPage, Long pageSize);
 
 
     /**
@@ -315,7 +315,7 @@ public interface BlogService extends SuperService<Blog> {
      *
      * @return
      */
-    public String getBlogTimeSortList();
+    String getBlogTimeSortList();
 
     /**
      * 通过月份获取日期
@@ -323,5 +323,5 @@ public interface BlogService extends SuperService<Blog> {
      * @param monthDate
      * @return
      */
-    public String getArticleByMonth(String monthDate);
+    String getArticleByMonth(String monthDate);
 }

@@ -19,16 +19,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * json解析的工具类
+ * json 解析的工具类
  *
  * @author 陌溪
  * 2018年5月7日 下午5:21:23
  */
 public class JsonUtils {
 
-    // 定义jackson对象
+    /**
+     * 定义 jackson 对象
+     */
     private static final ObjectMapper MAPPER = new ObjectMapper();
     public static Logger log = LoggerFactory.getLogger(JsonUtils.class);
 
@@ -102,13 +103,12 @@ public class JsonUtils {
     }
 
     /**
-     * josn转arrayList
+     * json 转 arrayList
      *
      * @param jsonArray
      * @return
      */
     public static ArrayList<?> jsonArrayToArrayList(String jsonArray) {
-
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")

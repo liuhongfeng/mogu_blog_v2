@@ -19,15 +19,15 @@ public interface SystemConfigService extends SuperService<SystemConfig> {
      *
      * @return
      */
-    public SystemConfig getConfig();
+    SystemConfig getConfig();
 
     /**
-     * 通过Key前缀清空Redis缓存
+     * 通过 Key 前缀清空 Redis 缓存
      *
      * @param key
      * @return
      */
-    public String cleanRedisByKey(List<String> key);
+    String cleanRedisByKey(List<String> key);
 
     /**
      * 修改系统配置
@@ -35,5 +35,5 @@ public interface SystemConfigService extends SuperService<SystemConfig> {
      * @param systemConfigVO
      * @return
      */
-    public String editSystemConfig(SystemConfigVO systemConfigVO);
+    String editSystemConfig(SystemConfigVO systemConfigVO);
 }

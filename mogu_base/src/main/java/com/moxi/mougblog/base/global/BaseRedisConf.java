@@ -19,7 +19,7 @@ public class BaseRedisConf {
     public final static String BLOG_SORT_BY_MONTH = "BLOG_SORT_BY_MONTH";
 
     /**
-     * Redis分隔符
+     * Redis 分隔符
      */
     public final static String SEGMENTATION = ":";
 

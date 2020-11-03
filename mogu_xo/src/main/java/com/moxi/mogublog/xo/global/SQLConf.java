@@ -3,7 +3,7 @@ package com.moxi.mogublog.xo.global;
 import com.moxi.mougblog.base.global.BaseSQLConf;
 
 /**
- * SQL字段常量
+ * SQL 字段常量
  *
  * @author 陌溪
  * @date 2018年10月20日15:13:09

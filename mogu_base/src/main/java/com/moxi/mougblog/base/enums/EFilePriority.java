@@ -17,7 +17,7 @@ public class EFilePriority {
     public static final String QI_NIU = "1";
 
     /**
-     * Minio对象存储
+     * Minio 对象存储
      */
     public static final String MINIO = "2";
 

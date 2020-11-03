@@ -103,18 +103,17 @@ public class WebUtil {
     }
 
     /**
-     * 获取图片，返回Map
+     * 获取图片，返回 Map
      *
      * @param result
      * @return
      */
     public List<Map<String, Object>> getPictureMap(String result) {
-
-        String picturePriority = "";
-        String localPictureBaseUrl = "";
-        String qiNiuPictureBaseUrl = "";
-        String minioPictureBaseUrl = "";
-        // 从Redis中获取系统配置
+        String picturePriority;
+        String localPictureBaseUrl;
+        String qiNiuPictureBaseUrl;
+        String minioPictureBaseUrl;
+        // 从 Redis 中获取系统配置
         String systemConfigJson = redisUtil.get(RedisConf.SYSTEM_CONFIG);
         if (StringUtils.isEmpty(systemConfigJson)) {
             QueryWrapper<SystemConfig> queryWrapper = new QueryWrapper<>();
@@ -123,7 +122,7 @@ public class WebUtil {
             if (systemConfig == null) {
                 throw new QueryException(MessageConf.SYSTEM_CONFIG_IS_NOT_EXIST);
             } else {
-                // 将系统配置存入Redis中【设置过期时间24小时】
+                // 将系统配置存入 Redis 中【设置过期时间24小时】
                 redisUtil.setEx(RedisConf.SYSTEM_CONFIG, JsonUtils.objectToJson(systemConfig), 24, TimeUnit.HOURS);
             }
             picturePriority = systemConfig.getPicturePriority();
@@ -137,14 +136,13 @@ public class WebUtil {
             qiNiuPictureBaseUrl = systemConfig.getQiNiuPictureBaseUrl();
             minioPictureBaseUrl = systemConfig.getMinioPictureBaseUrl();
         }
-
         List<Map<String, Object>> resultList = new ArrayList<>();
         Map<String, Object> picMap = (Map<String, Object>) JsonUtils.jsonToObject(result, Map.class);
         if (SysConf.SUCCESS.equals(picMap.get(SysConf.CODE))) {
             List<Map<String, Object>> picData = (List<Map<String, Object>>) picMap.get(SysConf.DATA);
             if (picData.size() > 0) {
                 for (int i = 0; i < picData.size(); i++) {
-                    Map<String, Object> map = new HashMap<>();
+                    Map<String, Object> map = new HashMap<>(16);
                     if (StringUtils.isEmpty(picData.get(i).get(SysConf.URL)) || StringUtils.isEmpty(picData.get(i).get(SysConf.UID))) {
                         continue;
                     }
@@ -156,7 +154,6 @@ public class WebUtil {
                     } else {
                         map.put(SysConf.URL, localPictureBaseUrl + picData.get(i).get(SysConf.URL));
                     }
-
                     map.put(SysConf.UID, picData.get(i).get(SysConf.UID));
                     resultList.add(map);
                 }

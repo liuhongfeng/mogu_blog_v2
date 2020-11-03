@@ -282,16 +282,13 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
         queryWrapper.eq(BaseSQLConf.LEVEL, level);
         queryWrapper.eq(BaseSQLConf.STATUS, EStatus.ENABLE);
         queryWrapper.eq(BaseSQLConf.IS_PUBLISH, EPublish.PUBLISH);
-
         if (useSort == 0) {
             queryWrapper.orderByDesc(BaseSQLConf.CREATE_TIME);
         } else {
             queryWrapper.orderByDesc(BaseSQLConf.SORT);
         }
-
-        //因为首页并不需要显示内容，所以需要排除掉内容字段
+        // 因为首页并不需要显示内容，所以需要排除掉内容字段
         queryWrapper.select(Blog.class, i -> !i.getProperty().equals(SysConf.CONTENT));
-
         return blogMapper.selectPage(page, queryWrapper);
     }
 
@@ -1034,11 +1031,9 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
 
     @Override
     public IPage<Blog> getBlogPageByLevel(Integer level, Long currentPage, Integer useSort) {
-
-        //从Redis中获取内容
+        // 从 Redis 中获取内容
         String jsonResult = redisUtil.get(RedisConf.BLOG_LEVEL + RedisConf.SEGMENTATION + level);
-
-        //判断redis中是否有文章
+        // 判断 Redis 中是否有文章
         if (StringUtils.isNotEmpty(jsonResult)) {
             List jsonResult2List = JsonUtils.jsonArrayToArrayList(jsonResult);
             IPage pageList = new Page();
@@ -1047,6 +1042,7 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
         }
         Page<Blog> page = new Page<>();
         page.setCurrent(currentPage);
+        // 博客显示的数量
         String blogCount = null;
         switch (level) {
             case ELevel.NORMAL: {
@@ -1069,20 +1065,21 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
                 blogCount = sysParamsService.getSysParamsValueByKey(SysConf.BLOG_FOURTH_COUNT);
             }
             break;
+            default:
         }
         if (StringUtils.isEmpty(blogCount)) {
             log.error(MessageConf.PLEASE_CONFIGURE_SYSTEM_PARAMS);
         } else {
             page.setSize(Long.valueOf(blogCount));
         }
-
         IPage<Blog> pageList = blogService.getBlogPageByLevel(page, level, useSort);
         List<Blog> list = pageList.getRecords();
-
-        // 一级推荐或者二级推荐没有内容时，自动把top5填充至一级推荐和二级推荐中
-        if ((level == SysConf.ONE || level == SysConf.TWO) && list.size() == 0) {
+        // 一级推荐或者二级推荐没有内容时，自动把 top5 填充至一级推荐和二级推荐中
+        boolean existed = (level == SysConf.ONE || level == SysConf.TWO) && list.size() == 0;
+        if (existed) {
             QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
             Page<Blog> hotPage = new Page<>();
+            // 设置当前页
             hotPage.setCurrent(1);
             String blogHotCount = sysParamsService.getSysParamsValueByKey(SysConf.BLOG_HOT_COUNT);
             String blogSecondCount = sysParamsService.getSysParamsValueByKey(SysConf.BLOG_SECOND_COUNT);
@@ -1100,25 +1097,22 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
             List<Blog> secondBlogList = new ArrayList<>();
             List<Blog> firstBlogList = new ArrayList<>();
             for (int a = 0; a < hotBlogList.size(); a++) {
-                // 当推荐大于两个的时候
+                // 当推荐大于两个的时候，要把前面的数据给 firstBlogList
                 if ((hotBlogList.size() - firstBlogList.size()) > Long.valueOf(blogSecondCount)) {
                     firstBlogList.add(hotBlogList.get(a));
                 } else {
                     secondBlogList.add(hotBlogList.get(a));
                 }
             }
-
-            firstBlogList = setBlog(firstBlogList);
-            secondBlogList = setBlog(secondBlogList);
-
-            // 将从数据库查询的数据缓存到redis中，设置1小时后过期 [避免 list 中没有数据而保存至 redis 的情况]
+            setBlog(firstBlogList);
+            setBlog(secondBlogList);
+            // 将从数据库查询的数据缓存到 redis 中，设置 1 小时后过期，避免 list 中没有数据而保存至 redis 的情况
             if (firstBlogList.size() > 0) {
                 redisUtil.setEx(RedisConf.BLOG_LEVEL + Constants.SYMBOL_COLON + Constants.NUM_ONE, JsonUtils.objectToJson(firstBlogList), 1, TimeUnit.HOURS);
             }
             if (secondBlogList.size() > 0) {
                 redisUtil.setEx(RedisConf.BLOG_LEVEL + Constants.SYMBOL_COLON + Constants.NUM_TWO, JsonUtils.objectToJson(secondBlogList), 1, TimeUnit.HOURS);
             }
-
             switch (level) {
                 case SysConf.ONE: {
                     pageList.setRecords(firstBlogList);
@@ -1128,16 +1122,15 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
                     pageList.setRecords(secondBlogList);
                 }
                 break;
+                default:
             }
             return pageList;
         }
-
-        list = setBlog(list);
+        setBlog(list);
         pageList.setRecords(list);
-
-        // 将从数据库查询的数据缓存到redis中 [避免 list 中没有数据而保存至 redis 的情况]
+        // 将从数据库查询的数据缓存到 redis 中，避免 list 中没有数据而保存至 redis 的情况
         if (list.size() > 0) {
-            redisUtil.setEx(SysConf.BLOG_LEVEL + SysConf.REDIS_SEGMENTATION + level, JsonUtils.objectToJson(list).toString(), 1, TimeUnit.HOURS);
+            redisUtil.setEx(SysConf.BLOG_LEVEL + SysConf.REDIS_SEGMENTATION + level, JsonUtils.objectToJson(list), 1, TimeUnit.HOURS);
         }
         return pageList;
     }
@@ -1751,7 +1744,6 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
         final StringBuffer fileUids = new StringBuffer();
         List<String> sortUids = new ArrayList<>();
         List<String> tagUids = new ArrayList<>();
-
         list.forEach(item -> {
             if (StringUtils.isNotEmpty(item.getFileUid())) {
                 fileUids.append(item.getFileUid() + SysConf.FILE_SEGMENTATION);
@@ -1764,7 +1756,6 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
             }
         });
         String pictureList = null;
-
         if (fileUids != null) {
             pictureList = this.pictureFeignClient.getPicture(fileUids.toString(), SysConf.FILE_SEGMENTATION);
         }
@@ -1777,36 +1768,21 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
         if (tagUids.size() > 0) {
             tagList = tagService.listByIds(tagUids);
         }
-
         Map<String, BlogSort> sortMap = new HashMap<>();
         Map<String, Tag> tagMap = new HashMap<>();
         Map<String, String> pictureMap = new HashMap<>();
-
-        sortList.forEach(item -> {
-            sortMap.put(item.getUid(), item);
-        });
-
-        tagList.forEach(item -> {
-            tagMap.put(item.getUid(), item);
-        });
-
-        picList.forEach(item -> {
-            pictureMap.put(item.get(SQLConf.UID).toString(), item.get(SQLConf.URL).toString());
-        });
-
-
+        sortList.forEach(item -> sortMap.put(item.getUid(), item));
+        tagList.forEach(item -> tagMap.put(item.getUid(), item));
+        picList.forEach(item -> pictureMap.put(item.get(SQLConf.UID).toString(), item.get(SQLConf.URL).toString()));
         for (Blog item : list) {
-
-            //设置分类
+            // 设置分类
             if (StringUtils.isNotEmpty(item.getBlogSortUid())) {
                 item.setBlogSort(sortMap.get(item.getBlogSortUid()));
             }
-
-            //获取标签
+            // 获取标签
             if (StringUtils.isNotEmpty(item.getTagUid())) {
                 List<String> tagUidsTemp = StringUtils.changeStringToString(item.getTagUid(), SysConf.FILE_SEGMENTATION);
-                List<Tag> tagListTemp = new ArrayList<Tag>();
-
+                List<Tag> tagListTemp = new ArrayList<>();
                 tagUidsTemp.forEach(tag -> {
                     if (tagMap.get(tag) != null) {
                         tagListTemp.add(tagMap.get(tag));
@@ -1814,15 +1790,11 @@ public class BlogServiceImpl extends SuperServiceImpl<BlogMapper, Blog> implemen
                 });
                 item.setTagList(tagListTemp);
             }
-
-            //获取图片
+            // 获取图片
             if (StringUtils.isNotEmpty(item.getFileUid())) {
                 List<String> pictureUidsTemp = StringUtils.changeStringToString(item.getFileUid(), SysConf.FILE_SEGMENTATION);
                 List<String> pictureListTemp = new ArrayList<>();
-
-                pictureUidsTemp.forEach(picture -> {
-                    pictureListTemp.add(pictureMap.get(picture));
-                });
+                pictureUidsTemp.forEach(picture -> pictureListTemp.add(pictureMap.get(picture)));
                 item.setPhotoList(pictureListTemp);
             }
         }
