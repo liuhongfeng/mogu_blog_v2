@@ -33,7 +33,15 @@
 
 但是我还是非常希望各位小伙伴能够 **多多star支持**，您的**点赞**就是我维护的动力！
 
-如果您有任何相关建议，欢迎在issue或者群里提出，再次感谢大家的支持~
+项目已有较详细的  [项目搭建文档](http://moxi159753.gitee.io/mogu_blog_doc) ，同时包括了Window、Linux以及Docker环境下蘑菇博客的搭建。在使用过程中遇到问题时，首先认真阅读 [项目搭建文档](http://moxi159753.gitee.io/mogu_blog_doc) ，同时 [FAQ文档](./doc/FAQ) 还收集了小伙伴咨询的问题，可以提前阅读~
+
+【提问前】可以先 [百度](https://www.baidu.com/) 或者 [Google](https://www.google.com/) 进行解决，有的问题通过搜索引擎很快就能得到解决
+
+【提问前】可以首先看看 [issue](https://gitee.com/moxi159753/mogu_blog_v2/issues) 或者  [FAQ文档](./doc/FAQ)，可能你的问题别人也遇到过
+
+【提问前】可以提前阅读 [如何向开源社区提问题](http://www.moguit.cn/#/info?blogUid=b0f76c94a81fa3b815f8e39e4dc889f8)
+
+【提问】推荐使用 [Gitee issue](https://gitee.com/moxi159753/mogu_blog_v2/issues) 进行提问，因为issue解决后能够保留解决记录，帮助其它小伙伴闭坑。其次可以使用 Gitee留言板 ，或者在 <a href="##关注&交流">QQ群 </a> 进行提问。群里提问注意提问的时间，把遇到问题的详细过程都描述清楚，最好配上图文信息，这样能更快的解决问题。
 
 ## 后期维护
 
@@ -65,7 +73,7 @@
 >
 > 【演示账号】：mogu2018   mogu2018
 >
-> 【QQ小程序】蘑菇博客的移动端版本，可以扫码体验（代码在Nacos分支）
+> 【QQ小程序】蘑菇博客的移动端版本，可以扫码体验（代码在Nacos分支下的uniapp_mogu_web文件夹）
 
 <img src="./doc/images/uniapp/qqCode.png" width="200" />
 
@@ -91,13 +99,13 @@
 
 最低配置：1核2G `需要开启虚拟内存`
 
-推荐配置：2核4G
+推荐配置：2核4G 【双十一特惠】
 
-> 【阿里云】双十一津贴限时发放，更有全年超底价上云必备限时抢购 [点我进入](https://www.aliyun.com/1111/home?userCode=w7aungxw)
+> 【阿里云】双十一拼团 2核4G3M 664元/3年（强烈推荐） [点我进入](http://a.aliyun.com/f1.l0DRK)
 >
-> 【腾讯云】11.11 云上盛惠，云产品限时抢购，1核2G云服务器首年88元 [点我进入](https://curl.qcloud.com/Xrljvank)
+> 【阿里云】云服务器双11狂欢特惠，1核2G 最低仅需84.97元/年  [点我传送](https://www.aliyun.com/1111/home?userCode=w7aungxw)
 >
-> 【阿里云翼计划】 轻量级应用服务器 1核2G 5M / 年 (博主目前使用的) 仅需114元  [点我进入 ](https://promotion.aliyun.com/ntms/act/campus2018.html?spm=5176.10695662.1244717.1.641e5a06KpmU4A&accounttraceid=3ac1b990a4f445859080d2555566af8fiirr?userCode=w7aungxw&tag=share_component&share_source=copy_link?userCode=w7aungxw&tag=share_component&share_source=copy_link?userCode=w7aungxw&tag=share_component&share_source=copy_link&userCode=w7aungxw&tag=share_component&share_source=copy_link) `(仅限学生或未满24岁的用户)`
+> 【腾讯云】双十一活动2核4G 100G盘700元/3年（老用户重新用微信QQ注册即可） [点我进入](https://curl.qcloud.com/8Nfp3pRy)
 
 ## 项目特点
 
@@ -133,12 +141,6 @@
 
 - Gitee地址：https://gitee.com/moxi159753/mogu_blog_v2
 - Github地址：https://github.com/moxi624/mogu_blog_v2
-
-## FAQ文档
-
-[FAQ文档](./doc/FAQ)汇集了一些小伙伴在使用过程中遇到的问题，在进行蘑菇博客的搭建和部署的时，遇到问题后可以优先查看本[FAQ文档](./doc/FAQ)看看是否出现，这里将收集各个小伙伴遇到的问题，希望各位小伙伴能自己提前翻阅一下，高效提问，避免重复提问。
-
-如果你遇到了[FAQ文档](./doc/FAQ)中没有出现的问题，并且已经解决了，欢迎能够提交Pull Request更新文档，或者直接在群里给我反馈，感谢各位小伙伴~，希望大家在部署和使用的时候能够少走弯路。
 
 ## 目录介绍
 
@@ -199,6 +201,7 @@
 |     Zipkin     |         链路追踪          |             https://github.com/openzipkin/zipkin             |
 | Flexmark-java  |     Markdown转换Html      |            https://github.com/vsch/flexmark-java             |
 |   Ip2region    |     离线IP地址定位库      |          https://github.com/lionsoul2014/ip2region           |
+|     Minio      |     本地对象存储服务      |                       https://min.io/                        |
 
 ### 前端技术
 
@@ -335,9 +338,9 @@
 
 刚刚创建了一个QQ群 (**加群备注**：`蘑菇博客`) <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=soh24RYi"><img border="0" src="./doc/images/qq/group.png" alt="蘑菇博客交流群" title="蘑菇博客交流群"></a>，目前项目还存在很多不足之处，欢迎各位老哥进群进行技术交流，为了防止广告进入，希望加群的时候能添加备注，谢谢~
 
-|                QQ群（备注：`蘑菇博客`）                |              QQ（备注：`蘑菇博客`）              |
-| :----------------------------------------------------: | :----------------------------------------------: |
-| <img src="./doc/images/qq/qqGroup2.png" width="200" /> | <img src="./doc/images/qq/qq.png" width="200" /> |
+|               QQ群（备注：`蘑菇博客`）                |                QQ群（备注：`蘑菇博客`）                |
+| :---------------------------------------------------: | :----------------------------------------------------: |
+| <img src="./doc/images/qq/qqGroup.png" width="200" /> | <img src="./doc/images/qq/qqGroup2.png" width="200" /> |
 
 ## 将来要做的事
 
