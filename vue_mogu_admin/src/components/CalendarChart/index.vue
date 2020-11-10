@@ -76,11 +76,12 @@
                 },
                 yearLabel: {show: false},
                 dayLabel: {
-                  nameMap: ["周一","周二","周三","周四","周五","周六","周日"], // 设置中文显示
+                  nameMap: ["周日","周一","周二","周三","周四","周五","周六"], // 设置中文显示
                   textStyle: {
                     // 设置周显示颜色
                     color: '#000'
-                  }
+                  },
+                  firstDay: 1 // 从周一开始
                 },
                 monthLabel: {
                   nameMap: 'cn', // 设置中文显示
@@ -116,7 +117,6 @@
                       }
                       return size;
                     }
-
                   },
                   itemStyle: {
                     normal: {
@@ -127,11 +127,8 @@
                 }
               ]
             };
-
             chart.setOption(option);
-
           }
-
         });
       }
     }
