@@ -1,9 +1,7 @@
 package com.moxi.mogublog.admin.restapi;
 
-
 import com.moxi.mogublog.admin.annotion.AuthorityVerify.AuthorityVerify;
 import com.moxi.mogublog.admin.annotion.OperationLogger.OperationLogger;
-import com.moxi.mogublog.admin.global.SysConf;
 import com.moxi.mogublog.utils.ResultUtil;
 import com.moxi.mogublog.xo.service.PictureService;
 import com.moxi.mogublog.xo.vo.PictureVO;
@@ -43,7 +41,6 @@ public class PictureRestApi {
     @ApiOperation(value = "获取图片列表", notes = "获取图片列表", response = String.class)
     @PostMapping(value = "/getList")
     public String getList(@Validated({GetList.class}) @RequestBody PictureVO pictureVO, BindingResult result) {
-
         // 参数校验
         ThrowableUtils.checkParamArgument(result);
         log.info("获取图片列表:", pictureVO);
@@ -91,5 +88,6 @@ public class PictureRestApi {
         log.info("设置图片分类封面:{}", pictureVO);
         return pictureService.setPictureCover(pictureVO);
     }
+
 }
 

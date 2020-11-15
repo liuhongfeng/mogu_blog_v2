@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author 陌溪
  * @date 2020年1月21日22:19:10
  */
-
 @FeignClient(name = "mogu-admin", configuration = FeignConfiguration.class)
 public interface AdminFeignClient {
-
 
     /**
      * 获取系统配置信息
      */
     @RequestMapping(value = "/systemConfig/getSystemConfig", method = RequestMethod.GET)
-    public String getSystemConfig();
+    String getSystemConfig();
 
 }

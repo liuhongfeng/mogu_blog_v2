@@ -15,7 +15,7 @@ import lombok.Data;
 public class BaseVO<T> extends PageInfo<T> {
 
     /**
-     * 唯一UID
+     * 唯一 UID
      */
     @IdValid(groups = {Update.class, Delete.class})
     private String uid;

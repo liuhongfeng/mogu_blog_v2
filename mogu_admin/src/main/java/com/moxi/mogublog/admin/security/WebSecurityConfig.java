@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * SpringSecurity配置文件
+ * SpringSecurity 配置文件
  * 用于配置哪些请求被拦截，哪些请求可以匿名访问
  *
  * @author 陌溪
@@ -37,16 +37,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                // 设置UserDetailsService
+                // 设置 UserDetailsService
                 .userDetailsService(this.userDetailsService)
-                // 使用BCrypt进行密码的hash
+                // 使用 BCrypt 进行密码的 hash
                 .passwordEncoder(passwordEncoder());
-        //remember me
+        // remember me
         authenticationManagerBuilder.eraseCredentials(false);
     }
 
     /**
-     * 装载BCrypt密码编码器
+     * 装载 BCrypt 密码编码器
      *
      * @return
      */
@@ -81,21 +81,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        //因为SpringSecurity使用X-Frame-Options防止网页被Frame。所以需要关闭为了让后端的接口管理的swagger页面正常显示
+        // 因为 SpringSecurity 使用 X-Frame-Options 防止网页被 Frame。所以需要关闭为了让后端的接口管理的 swagger 页面正常显示
         httpSecurity.headers().frameOptions().disable();
 
         httpSecurity
-                //新加入,允许跨域
+                // 新加入,允许跨域
                 .cors()
                 .and()
-                // 由于使用的是JWT，我们这里不需要csrf
+                // 由于使用的是JWT，我们这里不需要 csrf
                 .csrf().disable()
                 // 异常的处理器，将执行未鉴权的处理方法
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                // 基于token，所以不需要session
+                // 基于 token，所以不需要 session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许对于网站静态资源的无授权访问
                 .antMatchers(
                         "/swagger-ui.html",
@@ -107,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/actuator/**",
                         "/druid/**"
                 ).permitAll()
-                // 对于获取token的RestApi要允许匿名访问
+                // 对于获取 token 的 RestApi 要允许匿名访问
                 .antMatchers("/auth/**",
                         "/creatCode/**",
                         "/file/**"
@@ -116,7 +116,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         // 添加两个过滤器
-        // JwtAuthenticationTokenFilter: JWT认证过滤器,验证token有效性
+        // JwtAuthenticationTokenFilter: JWT 认证过滤器,验证 token 有效性
         // UsernamePasswordAuthenticationFilter: 认证操作全靠这个过滤器
         httpSecurity.addFilterBefore(registrationBean(new JwtAuthenticationTokenFilter()).getFilter(),
                 UsernamePasswordAuthenticationFilter.class);

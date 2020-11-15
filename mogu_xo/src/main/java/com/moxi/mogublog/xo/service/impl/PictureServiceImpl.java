@@ -61,7 +61,6 @@ public class PictureServiceImpl extends SuperServiceImpl<PictureMapper, Picture>
         if (StringUtils.isNotEmpty(pictureVO.getKeyword()) && !StringUtils.isEmpty(pictureVO.getKeyword().trim())) {
             queryWrapper.like(SQLConf.PIC_NAME, pictureVO.getKeyword().trim());
         }
-
         Page<Picture> page = new Page<>();
         page.setCurrent(pictureVO.getCurrentPage());
         page.setSize(pictureVO.getPageSize());
@@ -70,26 +69,19 @@ public class PictureServiceImpl extends SuperServiceImpl<PictureMapper, Picture>
         queryWrapper.orderByDesc(SQLConf.CREATE_TIME);
         IPage<Picture> pageList = pictureService.page(page, queryWrapper);
         List<Picture> pictureList = pageList.getRecords();
-
         final StringBuffer fileUids = new StringBuffer();
         pictureList.forEach(item -> {
             if (StringUtils.isNotEmpty(item.getFileUid())) {
                 fileUids.append(item.getFileUid() + SysConf.FILE_SEGMENTATION);
             }
         });
-
         String pictureResult = null;
-        Map<String, String> pictureMap = new HashMap<>();
-
+        Map<String, String> pictureMap = new HashMap<>(16);
         if (fileUids != null) {
             pictureResult = this.pictureFeignClient.getPicture(fileUids.toString(), SysConf.FILE_SEGMENTATION);
         }
         List<Map<String, Object>> picList = webUtil.getPictureMap(pictureResult);
-
-        picList.forEach(item -> {
-            pictureMap.put(item.get(SysConf.UID).toString(), item.get(SysConf.URL).toString());
-        });
-
+        picList.forEach(item -> pictureMap.put(item.get(SysConf.UID).toString(), item.get(SysConf.URL).toString()));
         for (Picture item : pictureList) {
             if (StringUtils.isNotEmpty(item.getFileUid())) {
                 item.setPictureUrl(pictureMap.get(item.getFileUid()));

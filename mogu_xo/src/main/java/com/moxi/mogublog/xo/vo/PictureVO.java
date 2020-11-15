@@ -20,12 +20,12 @@ import javax.validation.constraints.NotBlank;
 public class PictureVO extends BaseVO<PictureVO> {
 
     /**
-     * 图片UID
+     * 图片 UID
      */
     private String fileUid;
 
     /**
-     * 图片UIDs
+     * 图片 UIDs
      */
     @NotBlank(groups = {Insert.class})
     private String fileUids;
@@ -36,7 +36,7 @@ public class PictureVO extends BaseVO<PictureVO> {
     private String picName;
 
     /**
-     * 所属相册分类UID
+     * 所属相册分类 UID
      */
     @NotBlank(groups = {Insert.class, Update.class, GetList.class})
     private String pictureSortUid;

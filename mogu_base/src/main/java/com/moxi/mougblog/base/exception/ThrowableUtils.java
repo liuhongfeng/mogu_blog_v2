@@ -16,8 +16,9 @@ import java.util.Objects;
  * @date 2019年12月4日22:47:18
  */
 public class ThrowableUtils {
+
     /**
-     * 校验参数正确,拼装字段名和值到错误信息
+     * 校验参数正确，拼装字段名和值到错误信息
      *
      * @param result
      */
@@ -38,7 +39,6 @@ public class ThrowableUtils {
                         sb.append(error.getField()).append(" ").append(defMsg);
                     } else {
                         sb.append(error.getField()).append(" ").append(defMsg);
-                        // sb.append(error.getField()).append(" ").append(defMsg).append(":").append(rejectedValue);
                     }
                 }
             } else {
@@ -47,6 +47,6 @@ public class ThrowableUtils {
             }
             throw new ApiInvalidParamException(sb.toString());
         }
-
     }
+
 }

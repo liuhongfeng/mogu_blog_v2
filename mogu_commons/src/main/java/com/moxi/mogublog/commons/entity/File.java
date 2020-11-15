@@ -33,27 +33,27 @@ public class File extends SuperEntity<File> {
     private String picName;
 
     /**
-     * 图片url地址
+     * 图片 url 地址
      */
     private String picUrl;
 
     /**
-     * 管理员Uid
+     * 管理员 Uid
      */
     private String adminUid;
 
     /**
-     * 用户Uid
+     * 用户 Uid
      */
     private String userUid;
 
     /**
-     * 七牛云Url
+     * 七牛云 Url
      */
     private String qiNiuUrl;
 
     /**
-     * Minio文件URL
+     * Minio 文件 URL
      */
     private String minioUrl;
 }

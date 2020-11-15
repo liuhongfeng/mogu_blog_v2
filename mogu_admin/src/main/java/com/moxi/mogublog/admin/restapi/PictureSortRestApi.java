@@ -1,6 +1,5 @@
 package com.moxi.mogublog.admin.restapi;
 
-
 import com.moxi.mogublog.admin.annotion.AuthorityVerify.AuthorityVerify;
 import com.moxi.mogublog.admin.annotion.AvoidRepeatableCommit.AvoidRepeatableCommit;
 import com.moxi.mogublog.admin.annotion.OperationLogger.OperationLogger;
@@ -106,5 +105,6 @@ public class PictureSortRestApi {
         log.info("通过Uid获取分类: {}", pictureSort);
         return ResultUtil.successWithData(pictureSort);
     }
+
 }
 

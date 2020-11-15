@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -36,6 +33,7 @@ public class LocalFileServiceImpl implements LocalFileService {
 
     @Autowired
     FileSortService fileSortService;
+
     /**
      * 本地图片上传路径
      */
@@ -133,31 +131,26 @@ public class LocalFileServiceImpl implements LocalFileService {
      */
     private String uploadSingleFile(MultipartFile multipartFile, FileSort fileSort) throws IOException {
         String sortUrl = fileSort.getUrl();
-        //判断url是否为空，如果为空，使用默认
+        // 判断 url 是否为空，如果为空，使用默认
         if (StringUtils.isEmpty(sortUrl)) {
             sortUrl = "base/common/";
         } else {
             sortUrl = fileSort.getUrl();
         }
         String oldName = multipartFile.getOriginalFilename();
-        //获取扩展名，默认是jpg
+        // 获取扩展名，默认是 jpg
         String picExpandedName = FileUtils.getPicExpandedName(oldName);
-        //获取新文件名
+        // 获取新文件名
         String newFileName = System.currentTimeMillis() + Constants.SYMBOL_POINT + picExpandedName;
-
-        String newPath = path + sortUrl + "/" + picExpandedName + "/" + DateUtils.getYears() + "/"
-                + DateUtils.getMonth() + "/" + DateUtils.getDay() + "/";
-
-        String picurl = sortUrl + "/" + picExpandedName + "/" + DateUtils.getYears() + "/"
-                + DateUtils.getMonth() + "/" + DateUtils.getDay() + "/" + newFileName;
+        String newPath = path + sortUrl + "/" + picExpandedName + "/" + DateUtils.getYears() + "/" + DateUtils.getMonth() + "/" + DateUtils.getDay() + "/";
+        String picurl = sortUrl + "/" + picExpandedName + "/" + DateUtils.getYears() + "/" + DateUtils.getMonth() + "/" + DateUtils.getDay() + "/" + newFileName;
         String saveUrl = newPath + newFileName;
-
         // 保存本地，创建目录
-        java.io.File file1 = new java.io.File(newPath);
+        File file1 = new File(newPath);
         if (!file1.exists()) {
             file1.mkdirs();
         }
-        java.io.File saveFile = new java.io.File(saveUrl);
+        File saveFile = new File(saveUrl);
         // 序列化文件到本地
         saveFile.createNewFile();
         multipartFile.transferTo(saveFile);

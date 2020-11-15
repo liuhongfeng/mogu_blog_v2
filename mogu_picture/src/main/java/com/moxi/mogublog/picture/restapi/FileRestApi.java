@@ -64,9 +64,9 @@ public class FileRestApi {
 
     /**
      * 多文件上传
-     * 上传图片接口   传入 userId sysUserId ,有那个传哪个，记录是谁传的,
-     * projectName 传入的项目名称如 base 默认是base
-     * sortName 传入的模块名， 如 admin，user ,等，不在数据库中记录的是不会上传的
+     * 上传图片接口   传入 userId sysUserId，有那个传哪个，记录是谁传的
+     * projectName  传入的项目名称，如：base，默认是：base
+     * sortName     传入的模块名， 如：admin、user 等，不在数据库中记录的是不会上传的
      *
      * @return
      */

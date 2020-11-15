@@ -18,7 +18,7 @@ import lombok.ToString;
 public class PictureSortVO extends BaseVO<PictureSortVO> {
 
     /**
-     * 父UID
+     * 父 UID
      */
     private String parentUid;
 
@@ -28,7 +28,7 @@ public class PictureSortVO extends BaseVO<PictureSortVO> {
     private String name;
 
     /**
-     * 分类图片Uid
+     * 分类图片 Uid
      */
     private String fileUid;
 
@@ -42,4 +42,5 @@ public class PictureSortVO extends BaseVO<PictureSortVO> {
      */
     @IntegerNotNull(groups = {Insert.class, Update.class})
     private Integer isShow;
+
 }

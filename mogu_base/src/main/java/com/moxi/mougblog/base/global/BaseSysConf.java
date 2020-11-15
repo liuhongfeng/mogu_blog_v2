@@ -139,24 +139,83 @@ public class BaseSysConf {
     public static final int TWO_TWO_FIVE = 225;
     public static final int ONE_ZERO_TWO_FOUR = 1024;
 
-    // SystemConfig相关
+    /** ---------------------------------------- SystemConfig相关 ---------------------------------------- */
+
+    /**
+     * 图片是否上传七牛云 (0:否， 1：是)
+     */
     public final static String UPLOAD_QI_NIU = "uploadQiNiu";
+
+    /**
+     * 图片是否上传本地存储 (0:否， 1：是)
+     */
     public final static String UPLOAD_LOCAL = "uploadLocal";
+
+    /**
+     * 图片是否上传 Minio (0:否， 1：是)
+     */
     public final static String UPLOAD_MINIO = "uploadMinio";
+
+    /**
+     * 本地服务器域名前缀：http://localhost:8600
+     */
     public final static String LOCAL_PICTURE_BASE_URL = "localPictureBaseUrl";
+
+    /**
+     * 七牛云域名前缀：http://images.moguit.cn
+     */
     public final static String QI_NIU_PICTURE_BASE_URL = "qiNiuPictureBaseUrl";
+
+    /**
+     * Minio 服务器文件域名前缀
+     */
     public final static String MINIO_PICTURE_BASE_URL = "minioPictureBaseUrl";
+
+    /**
+     * 七牛云公钥
+     */
     public final static String QI_NIU_ACCESS_KEY = "qiNiuAccessKey";
+
+    /**
+     * 七牛云私钥
+     */
     public final static String QI_NIU_SECRET_KEY = "qiNiuSecretKey";
+
+    /**
+     * 七牛云上传空间
+     */
     public final static String QI_NIU_BUCKET = "qiNiuBucket";
+
+    /**
+     * 七牛云存储区域 华东（z0），华北(z1)，华南(z2)，北美(na0)，东南亚(as0)
+     */
     public final static String QI_NIU_AREA = "qiNiuArea";
 
+    /**
+     * Minio 远程连接地址
+     */
     public final static String MINIO_END_POINT = "minioEndPoint";
+
+    /**
+     * Minio 公钥
+     */
     public final static String MINIO_ACCESS_KEY = "minioAccessKey";
+
+    /**
+     * Minio 私钥
+     */
     public final static String MINIO_SECRET_KEY = "minioSecretKey";
+
+    /**
+     * Minio 桶
+     */
     public final static String MINIO_BUCKET = "minioBucket";
 
+    /**
+     * 图片显示优先级（ 1 展示 七牛云,  0 本地）
+     */
     public final static String PICTURE_PRIORITY = "picturePriority";
+
     public final static String PICTURE = "picture";
     public final static String PICTURE_TOKEN = "pictureToken";
     public final static String LIST = "list";

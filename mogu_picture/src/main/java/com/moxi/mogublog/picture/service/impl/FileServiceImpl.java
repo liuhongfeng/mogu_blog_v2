@@ -98,23 +98,23 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
         } else {
             List<Map<String, Object>> list = new ArrayList<>();
             List<String> changeStringToString = StringUtils.changeStringToString(fileIds, code);
-            QueryWrapper<com.moxi.mogublog.commons.entity.File> queryWrapper = new QueryWrapper<>();
+            QueryWrapper<File> queryWrapper = new QueryWrapper<>();
             queryWrapper.in(SQLConf.UID, changeStringToString);
-            List<com.moxi.mogublog.commons.entity.File> fileList = fileService.list(queryWrapper);
+            List<File> fileList = fileService.list(queryWrapper);
             if (fileList.size() > 0) {
-                for (com.moxi.mogublog.commons.entity.File file : fileList) {
+                for (File file : fileList) {
                     if (file != null) {
                         Map<String, Object> remap = new HashMap<>();
                         // 获取七牛云地址
                         remap.put(SysConf.QI_NIU_URL, file.getQiNiuUrl());
-                        // 获取Minio对象存储地址
+                        // 获取 Minio 对象存储地址
                         remap.put(SysConf.MINIO_URL, file.getMinioUrl());
                         // 获取本地地址
                         remap.put(SysConf.URL, file.getPicUrl());
                         // 后缀名，也就是类型
                         remap.put(SysConf.EXPANDED_NAME, file.getPicExpandedName());
                         remap.put(SysConf.FILE_OLD_NAME, file.getFileOldName());
-                        //名称
+                        // 名称
                         remap.put(SysConf.NAME, file.getPicName());
                         remap.put(SysConf.UID, file.getUid());
                         remap.put(SQLConf.FILE_OLD_NAME, file.getFileOldName());
@@ -128,31 +128,28 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
 
     @Override
     public String batchUploadFile(HttpServletRequest request, List<MultipartFile> filedatas, SystemConfig systemConfig) {
-
         String uploadQiNiu = systemConfig.getUploadQiNiu();
         String uploadLocal = systemConfig.getUploadLocal();
         String uploadMinio = systemConfig.getUploadMinio();
-
         // 判断来源
         String source = request.getParameter(SysConf.SOURCE);
-        //如果是用户上传，则包含用户uid
-        String userUid = "";
-        //如果是管理员上传，则包含管理员uid
-        String adminUid = "";
-        //项目名
-        String projectName = "";
-        //模块名
-        String sortName = "";
-
+        // 如果是用户上传，则包含用户 uid
+        String userUid;
+        // 如果是管理员上传，则包含管理员 uid
+        String adminUid;
+        // 项目名
+        String projectName;
+        // 模块名
+        String sortName;
         // 判断图片来源
         if (SysConf.PICTURE.equals(source)) {
-            // 当从vue-mogu-web网站过来的，直接从参数中获取
+            // 当从 vue-mogu-web 网站过来的，直接从参数中获取
             userUid = request.getParameter(SysConf.USER_UID);
             adminUid = request.getParameter(SysConf.ADMIN_UID);
             projectName = request.getParameter(SysConf.PROJECT_NAME);
             sortName = request.getParameter(SysConf.SORT_NAME);
         } else if (SysConf.ADMIN.equals(source)) {
-            // 当图片从mogu-admin传递过来的时候
+            // 当图片从 mogu-admin 传递过来的时候
             userUid = request.getAttribute(SysConf.USER_UID).toString();
             adminUid = request.getAttribute(SysConf.ADMIN_UID).toString();
             projectName = request.getAttribute(SysConf.PROJECT_NAME).toString();
@@ -163,47 +160,35 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
             projectName = request.getAttribute(SysConf.PROJECT_NAME).toString();
             sortName = request.getAttribute(SysConf.SORT_NAME).toString();
         }
-
-        //projectName现在默认base
+        // projectName 现在默认 base
         if (StringUtils.isEmpty(projectName)) {
             projectName = "base";
         }
-
-        //TODO 检测用户上传，如果不是网站的用户就不能调用
+        // TODO 检测用户上传，如果不是网站的用户就不能调用
         if (StringUtils.isEmpty(userUid) && StringUtils.isEmpty(adminUid)) {
             return ResultUtil.result(SysConf.ERROR, "请先注册");
         }
-
         QueryWrapper<FileSort> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(SQLConf.SORT_NAME, sortName);
         queryWrapper.eq(SQLConf.PROJECT_NAME, projectName);
         queryWrapper.eq(SQLConf.STATUS, EStatus.ENABLE);
+        // 查询文件分类表
         List<FileSort> fileSorts = fileSortService.list(queryWrapper);
-
-        FileSort fileSort = null;
+        FileSort fileSort;
         if (fileSorts.size() >= 1) {
             fileSort = fileSorts.get(0);
         } else {
             return ResultUtil.result(SysConf.ERROR, "文件不被允许上传");
         }
-
-        String sortUrl = fileSort.getUrl();
-        //判断url是否为空，如果为空，使用默认
-        if (StringUtils.isEmpty(sortUrl)) {
-            sortUrl = "base/common/";
-        } else {
-            sortUrl = fileSort.getUrl();
-        }
-
         List<File> lists = new ArrayList<>();
-        //文件上传
+        // 文件上传
         if (filedatas != null && filedatas.size() > 0) {
             for (MultipartFile filedata : filedatas) {
                 String oldName = filedata.getOriginalFilename();
                 long size = filedata.getSize();
-                //获取扩展名，默认是jpg
+                // 获取扩展名，默认是 jpg
                 String picExpandedName = FileUtils.getPicExpandedName(oldName);
-                //获取新文件名
+                // 获取新文件名
                 String newFileName = System.currentTimeMillis() + Constants.SYMBOL_POINT + picExpandedName;
                 String localUrl = "";
                 String qiNiuUrl = "";
@@ -214,12 +199,10 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
                     if (EOpenStatus.OPEN.equals(uploadQiNiu)) {
                         qiNiuUrl = qiniuService.uploadFile(tempFileData);
                     }
-
-                    // 判断是否能够上传Minio文件服务器
+                    // 判断是否能够上传 Minio 文件服务器
                     if (EOpenStatus.OPEN.equals(uploadMinio)) {
                         minioUrl = minioService.uploadFile(tempFileData);
                     }
-
                     // 判断是否能够上传至本地
                     if (EOpenStatus.OPEN.equals(uploadLocal)) {
                         localUrl = localFileService.uploadFile(filedata, fileSort);
@@ -229,7 +212,6 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
                     e.getStackTrace();
                     return ResultUtil.result(SysConf.ERROR, "文件上传失败，请检查系统配置");
                 }
-
                 File file = new File();
                 file.setCreateTime(new Date(System.currentTimeMillis()));
                 file.setFileSortUid(fileSort.getUid());
@@ -246,7 +228,7 @@ public class FileServiceImpl extends SuperServiceImpl<FileMapper, File> implemen
                 file.insert();
                 lists.add(file);
             }
-            //保存成功返回数据
+            // 保存成功返回数据
             return ResultUtil.result(SysConf.SUCCESS, lists);
         }
         return ResultUtil.result(SysConf.ERROR, "请上传图片");

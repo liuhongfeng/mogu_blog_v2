@@ -23,7 +23,7 @@ public interface FileService extends SuperService<File> {
      * @param multipartFileList
      * @return
      */
-    public String cropperPicture(List<MultipartFile> multipartFileList);
+    String cropperPicture(List<MultipartFile> multipartFileList);
 
     /**
      * 通过fileIds获取图片信息
@@ -32,7 +32,7 @@ public interface FileService extends SuperService<File> {
      * @param code
      * @return
      */
-    public String getPicture(String fileIds, String code);
+    String getPicture(String fileIds, String code);
 
     /**
      * 批量文件上传

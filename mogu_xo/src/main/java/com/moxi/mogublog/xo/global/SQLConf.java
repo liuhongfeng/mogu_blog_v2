@@ -10,9 +10,8 @@ import com.moxi.mougblog.base.global.BaseSQLConf;
  */
 public final class SQLConf extends BaseSQLConf {
 
-
     /**
-     * FileSort表
+     * FileSort 表
      */
     public final static String BLOG_SORT_UID = "blog_sort_uid";
     public final static String RESOURCE_SORT_UID = "resource_sort_uid";
