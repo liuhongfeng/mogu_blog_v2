@@ -71,7 +71,7 @@
 >
 > 【演示后端】：http://demoadmin.moguit.cn/
 >
-> 【演示账号】：mogu2018   mogu2018
+> 【演示账号】：mogu2018   mogu2018【演示环境只开放查询权限和部分操作权限】
 >
 > 【QQ小程序】蘑菇博客的移动端版本，可以扫码体验（代码在Nacos分支下的uniapp_mogu_web文件夹）
 
@@ -246,7 +246,9 @@
 
 ### 蘑菇博客部署到云服务器
 
-参考[蘑菇博客如何部署到阿里云服务器](http://www.moguit.cn/#/info?blogUid=89defe3f4a3f317cba9aa0cdb9ff879e)，在你修改蘑菇博客源码后将项目打包部署到云服务器
+参考[蘑菇博客如何部署到阿里云服务器(Eureka分支)](http://www.moguit.cn/#/info?blogUid=89defe3f4a3f317cba9aa0cdb9ff879e)，在你修改Eureka分支博客源码后将项目打包部署到云服务器
+
+参考[蘑菇博客如何部署到阿里云服务器(Nacos分支)](http://www.moguit.cn/#/info?blogUid=ecde4ce178bdc1a241e9f9ddd9052013)，在你修改Nacos分支博客源码后将项目打包部署到云服务器
 
 ### 使用Github Actions完成蘑菇博客持续集成
 
@@ -338,7 +340,7 @@
 
 刚刚创建了一个QQ群 (**加群备注**：`蘑菇博客`) <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=soh24RYi"><img border="0" src="./doc/images/qq/group.png" alt="蘑菇博客交流群" title="蘑菇博客交流群"></a>，目前项目还存在很多不足之处，欢迎各位老哥进群进行技术交流，为了防止广告进入，希望加群的时候能添加备注，谢谢~
 
-|               QQ群（备注：`蘑菇博客`）                |                QQ群（备注：`蘑菇博客`）                |
+|         ~~QQ群（备注：`蘑菇博客`）【群满】~~          |            QQ群（备注：`蘑菇博客`）【推荐】            |
 | :---------------------------------------------------: | :----------------------------------------------------: |
 | <img src="./doc/images/qq/qqGroup.png" width="200" /> | <img src="./doc/images/qq/qqGroup2.png" width="200" /> |
 
