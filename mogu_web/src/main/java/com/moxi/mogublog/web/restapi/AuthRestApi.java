@@ -41,6 +41,7 @@ import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -60,6 +61,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020年10月11日10:25:58
  */
 @RestController
+@RefreshScope
 @RequestMapping("/oauth")
 @Api(value = "第三方登录相关接口", tags = {"第三方登录相关接口"})
 @Slf4j
@@ -181,8 +183,8 @@ public class AuthRestApi {
         }
 
         // 判断用户性别
-        if (data.get(SysConf.GENDER) != null) {
-            Object gender = data.get(SysConf.GENDER).toString();
+        if (data.get(SysConf.GENDER) != null && !exist) {
+            String gender = data.get(SysConf.GENDER).toString();
             if (SysConf.MALE.equals(gender)) {
                 user.setGender(EGender.MALE);
             } else if (SysConf.FEMALE.equals(gender)) {
@@ -264,14 +266,14 @@ public class AuthRestApi {
         QueryWrapper<SystemConfig> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(SQLConf.STATUS, EStatus.ENABLE);
         queryWrapper.last(SysConf.LIMIT_ONE);
-        Map<String, Object> systemConfigMap = systemConfigService.getMap(queryWrapper);
+        SystemConfig systemConfig = systemConfigService.getOne(queryWrapper);
         // 获取到头像，然后上传到自己服务器
         FileVO fileVO = new FileVO();
         fileVO.setAdminUid(SysConf.DEFAULT_UID);
         fileVO.setUserUid(SysConf.DEFAULT_UID);
         fileVO.setProjectName(SysConf.BLOG);
         fileVO.setSortName(SysConf.ADMIN);
-        fileVO.setSystemConfig(JsonUtils.mapToMap(systemConfigMap));
+        fileVO.setSystemConfig(JsonUtils.object2Map(systemConfig));
         List<String> urlList = new ArrayList<>();
         if (data.get(SysConf.AVATAR) != null) {
             urlList.add(data.get(SysConf.AVATAR).toString());
@@ -287,9 +289,9 @@ public class AuthRestApi {
                 if (listMap != null && listMap.size() > 0) {
                     Map<String, Object> pictureMap = listMap.get(0);
 
-                    String localPictureBaseUrl = systemConfigMap.get(SQLConf.LOCAL_PICTURE_BASE_URL).toString();
-                    String qiNiuPictureBaseUrl = systemConfigMap.get(SQLConf.QI_NIU_PICTURE_BASE_URL).toString();
-                    String picturePriority = systemConfigMap.get(SQLConf.PICTURE_PRIORITY).toString();
+                    String localPictureBaseUrl = systemConfig.getLocalPictureBaseUrl();
+                    String qiNiuPictureBaseUrl = systemConfig.getQiNiuPictureBaseUrl();
+                    String picturePriority = systemConfig.getPicturePriority();
                     user.setAvatar(pictureMap.get(SysConf.UID).toString());
                     // 判断图片优先展示
                     if (EOpenStatus.OPEN.equals(picturePriority)) {

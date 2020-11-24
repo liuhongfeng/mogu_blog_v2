@@ -35,7 +35,7 @@ import java.util.List;
 public class PictureRestApi {
 
     @Autowired
-    PictureService pictureService;
+    private PictureService pictureService;
 
     @AuthorityVerify
     @ApiOperation(value = "获取图片列表", notes = "获取图片列表", response = String.class)
